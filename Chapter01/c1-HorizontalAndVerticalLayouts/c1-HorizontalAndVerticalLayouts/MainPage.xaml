@@ -11,26 +11,79 @@
     <!--     <Button Text="B 4"/> -->
     <!-- </HorizontalStackLayout> -->
 
-    <!--<VerticalStackLayout Spacing="50">
-        <Button Text="B 1"/>
-        <Button Text="B 2"/>
-        <Button Text="B 3"/>
-        <Button Text="B 4"/>
+    <!--<VerticalStackLayout>
+        <CollectionView>
+            <CollectionView.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Item1</x:String>
+                    <x:String>Item2</x:String>
+                    <x:String>Item3</x:String>
+                    ~1~...@1@
+                    <x:String>Item100</x:String>
+                </x:Array>
+            </CollectionView.ItemsSource>
+        </CollectionView>
+        <Button Text="Some Button"/>
     </VerticalStackLayout>-->
 
-    <!--<Grid RowDefinitions="*,*,*,*" RowSpacing="50">
-        <Button Text="B 1"/>
-        <Button Text="B 2" Grid.Row="1"/>
-        <Button Text="B 3" Grid.Row="2"/>
-        <Button Text="B 4" Grid.Row="3"/>
-    </Grid>-->
+    <Grid RowDefinitions="*,Auto">
+        <CollectionView>
+            <CollectionView.ItemsSource>
+                <x:Array Type="{x:Type x:String}">
+                    <x:String>Item1</x:String>
+                    <x:String>Item2</x:String>
+                    <x:String>Item3</x:String>
+                    <x:String>Item4</x:String>
+                    <x:String>Item5</x:String>
+                    <x:String>Item6</x:String>
+                    <x:String>Item7</x:String>
+                    <x:String>Item8</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item9</x:String>
+                    <x:String>Item10</x:String>
+                    <!--more items here-->
+                    <x:String>Item100</x:String>
+                </x:Array>
+            </CollectionView.ItemsSource>
+        </CollectionView>
+        <Button Grid.Row="1" Text="Some Button" />
+    </Grid>
 
-    <FlexLayout Wrap="Wrap">
-        <Button Text="B 1" Margin="25" />
-        <Button Text="B 2" Margin="25" />
-        <Button Text="B 3" Margin="25" />
-        <Button Text="B 4" Margin="25" />
-        <Button Text="B 5" Margin="25" />
-    </FlexLayout>
+    <!-- <FlexLayout Wrap="Wrap"> -->
+    <!--     <Button Text="B 1" Margin="25" /> -->
+    <!--     <Button Text="B 2" Margin="25" /> -->
+    <!--     <Button Text="B 3" Margin="25" /> -->
+    <!--     <Button Text="B 4" Margin="25" /> -->
+    <!--     <Button Text="B 5" Margin="25" /> -->
+    <!-- </FlexLayout> -->
 
 </ContentPage>
