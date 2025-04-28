@@ -1,5 +1,6 @@
 <Solution>
   <Project Path="..\c1-BindableLayout\c1-BindableLayout.csproj" Type="Classic C#" />
+  <Project Path="..\c1-CustomLayout\c1-CustomLayout.csproj" Type="Classic C#" />
   <Project Path="..\c1-DeviceSpecificLayout\c1-DeviceSpecificLayout.csproj" Type="Classic C#" />
   <Project Path="..\c1-GridLayouts\c1-GridLayouts.csproj" Type="Classic C#" />
   <Project Path="..\c1-OrientationSpecificSettings\c1-OrientationSpecificSettings.csproj" Type="Classic C#" />
