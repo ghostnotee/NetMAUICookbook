@@ -1,6 +1,7 @@
 <Solution>
   <Project Path="..\c1-DeviceSpecificLayout\c1-DeviceSpecificLayout.csproj" Type="Classic C#" />
   <Project Path="..\c1-GridLayouts\c1-GridLayouts.csproj" Type="Classic C#" />
+  <Project Path="..\c1-OrientationSpecificSettings\c1-OrientationSpecificSettings.csproj" Type="Classic C#" />
   <Project Path="..\c1-ScrollableLayout\c1-ScrollableLayout.csproj" Type="Classic C#" />
   <Project Path="c1-HorizontalAndVerticalLayouts/c1-HorizontalAndVerticalLayouts.csproj" />
 </Solution>
