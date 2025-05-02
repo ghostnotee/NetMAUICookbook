@@ -1,3 +1,4 @@
 ﻿<Solution>
   <Project Path="c2-DecoupleViewAndViewModel\c2-DecoupleViewAndViewModel.csproj" Type="Classic C#" />
+  <Project Path="c2-GeneratedViewModels\c2-GeneratedViewModels.csproj" Type="Classic C#" />
 </Solution>
