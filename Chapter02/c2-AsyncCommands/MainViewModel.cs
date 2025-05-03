@@ -25,9 +25,8 @@ public partial class MainViewModel : ObservableObject
         Count++;
         TextValue = Count == 1 ? $"Clicked {Count} time" : $"Clicked {Count} times";
     }
-
-    public bool CanUpdateText()
-    {
-        return Count < 3;
-    }
+    
+    // public void Cancel() {
+    //     UpdateTextCommand.Cancel();
+    // }
 }
