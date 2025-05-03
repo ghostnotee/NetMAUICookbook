@@ -14,10 +14,7 @@ public partial class MainViewModel : ObservableObject
     public void UpdateText()
     {
         Count++;
-        if (Count == 1)
-            TextValue = $"Clicked {Count} time";
-        else
-            TextValue = $"Clicked {Count} times";
+        TextValue = Count == 1 ? $"Clicked {Count} time" : $"Clicked {Count} times";
     }
 
     public bool CanUpdateText()
