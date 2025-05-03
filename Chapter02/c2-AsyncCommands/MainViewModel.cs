@@ -10,9 +10,18 @@ public partial class MainViewModel : ObservableObject
 
     [ObservableProperty] string textValue = "Click Me!";
 
-    [RelayCommand(CanExecute = nameof(CanUpdateText))]
-    public void UpdateText()
+    [RelayCommand(IncludeCancelCommand = true)]
+    public async Task UpdateTextAsync(CancellationToken token)
     {
+        try
+        {
+            await Task.Delay(5000, token);
+        }
+        catch (OperationCanceledException)
+        {
+            return;
+        }
+        
         Count++;
         TextValue = Count == 1 ? $"Clicked {Count} time" : $"Clicked {Count} times";
     }
