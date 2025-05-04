@@ -1,6 +1,35 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="c2_CollectionInitialization.MainPage">
-    
+             xmlns:viewModel="clr-namespace:c2_CollectionInitialization"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="c2_CollectionInitialization.MainPage"
+             x:DataType="{x:Type viewModel:MyViewModel}"
+             x:Name="Page">
+
+    <ContentPage.BindingContext>
+        <viewModel:MyViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior EventName="Loaded" Command="{Binding InitializeCommand}"
+                                        BindingContext="{Binding Source={x:Reference Page}, Path=BindingContext}" />
+    </ContentPage.Behaviors>
+
+    <Grid>
+        <CollectionView ItemsSource="{Binding Customers}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type viewModel:Customer}">
+                    <HorizontalStackLayout Spacing="10">
+                        <Label Text="{Binding Id}" />
+                        <Label Text="{Binding Name}" />
+                    </HorizontalStackLayout>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <ActivityIndicator IsRunning="{Binding InitializeCommand.IsRunning}" HorizontalOptions="Center" VerticalOptions="Center" />
+    </Grid>
+
 </ContentPage>
