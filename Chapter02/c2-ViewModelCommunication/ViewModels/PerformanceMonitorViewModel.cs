@@ -6,11 +6,11 @@ namespace c2_ViewModelCommunication.ViewModels;
 
 public partial class PerformanceMonitorViewModel : ObservableObject
 {
-    [ObservableProperty] private ObservableCollection<string> performanceAlerts;
+    [ObservableProperty] private ObservableCollection<string> _performanceAlerts;
 
     public PerformanceMonitorViewModel()
     {
-        performanceAlerts = new ObservableCollection<string>();
+        _performanceAlerts = new ObservableCollection<string>();
         WeakReferenceMessenger.Default.Register<AlertMessage, string>(this, AlertTypes.Performance, (r, alert) => { PerformanceAlerts.Add(alert.Value); });
     }
 }

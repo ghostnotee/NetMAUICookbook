@@ -7,11 +7,11 @@ namespace c2_ViewModelCommunication.ViewModels;
 
 public partial class SecurityMonitorViewModel : ObservableObject
 {
-    [ObservableProperty] private ObservableCollection<string> securityAlerts;
+    [ObservableProperty] private ObservableCollection<string> _securityAlerts;
 
     public SecurityMonitorViewModel()
     {
-        securityAlerts = new ObservableCollection<string>();
+        _securityAlerts = new ObservableCollection<string>();
         WeakReferenceMessenger.Default.Register<AlertMessage, string>(this, AlertTypes.Security, (r, alert) => { SecurityAlerts.Add(alert.Value); });
     }
 }
