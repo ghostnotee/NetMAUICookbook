@@ -3,6 +3,7 @@
   <Project Path="c2-CollectionInitialization\c2-CollectionInitialization.csproj" Type="Classic C#" />
   <Project Path="c2-DecoupleViewAndViewModel\c2-DecoupleViewAndViewModel.csproj" Type="Classic C#" />
   <Project Path="c2-GeneratedViewModels\c2-GeneratedViewModels.csproj" Type="Classic C#" />
+  <Project Path="c2-MvvmDependencyInjection\c2-MvvmDependencyInjection.csproj" Type="Classic C#" />
   <Project Path="c2-UiAndViewModelInteraction\c2-UiAndViewModelInteraction.csproj" Type="Classic C#" />
   <Project Path="c2-ViewModelCommunication\c2-ViewModelCommunication.csproj" Type="Classic C#" />
 </Solution>
