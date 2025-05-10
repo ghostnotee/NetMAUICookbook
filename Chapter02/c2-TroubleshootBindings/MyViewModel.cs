@@ -15,7 +15,7 @@ public partial class MyViewModel : ObservableObject
     }
 
     [RelayCommand]
-    public void DeleteCustomer(Customer customer)
+    private void DeleteCustomer(Customer customer)
     {
         Customers.Remove(customer);
     }
