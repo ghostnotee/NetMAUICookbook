@@ -5,7 +5,7 @@
              xmlns:local="clr-namespace:c3_AttachedBehavior"
              x:Class="c3_AttachedBehavior.MainPage">
 
-    <Image Source="dotnet_bot.png" x:Name="image">
+    <Image Source="dotnet_bot.png" x:Name="Image">
         <Image.Behaviors>
             <local:DoubleTapToZoomBehavior ScaleFactor="3.5"/>
         </Image.Behaviors>

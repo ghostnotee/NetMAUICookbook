@@ -62,4 +62,43 @@ public class DoubleTapToZoomBehavior : Behavior<Image>
 
         isZoomed = !isZoomed;
     }
+
+    // public static readonly BindableProperty AttachBehaviorProperty = BindableProperty.CreateAttached(
+    //     "AttachBehavior",
+    //     typeof(bool),
+    //     typeof(DoubleTapToZoomBehavior), false, propertyChanged: OnAttachBehaviorChanged);
+    //
+    // public static bool GetAttachBehavior(BindableObject view)
+    // {
+    //     return (bool)view.GetValue(AttachBehaviorProperty);
+    // }
+    //
+    // public static void SetAttachBehavior(BindableObject view, bool value)
+    // {
+    //     view.SetValue(AttachBehaviorProperty, value);
+    // }
+    //
+    // static void OnAttachBehaviorChanged(BindableObject view, object oldValue, object newValue)
+    // {
+    //     Image img = view as Image;
+    //     if (img == null)
+    //     {
+    //         return;
+    //     }
+    //
+    //     bool attachBehavior = (bool)newValue;
+    //
+    //     if (attachBehavior)
+    //     {
+    //         img.Behaviors.Add(new DoubleTapToZoomBehavior());
+    //     }
+    //     else
+    //     {
+    //         Behavior toRemove = img.Behaviors.FirstOrDefault(b => b is DoubleTapToZoomBehavior);
+    //         if (toRemove != null)
+    //         {
+    //             img.Behaviors.Remove(toRemove);
+    //         }
+    //     }
+    // }
 }
