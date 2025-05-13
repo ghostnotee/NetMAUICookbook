@@ -16,6 +16,15 @@
                 <local:BarChartDrawable Value="0.8" />
             </GraphicsView.Drawable>
         </GraphicsView>
+        
+        <!--"There more..." section:-->
+        <local:SegmentedBarChartView 
+            Value="{Binding Source={x:Reference slider}, Path=Value}"/>
+        <Slider Minimum="0" 
+                Maximum="1" 
+                Value="0.2"
+                x:Name="slider"/>
+        
     </VerticalStackLayout>
 
 </ContentPage>
