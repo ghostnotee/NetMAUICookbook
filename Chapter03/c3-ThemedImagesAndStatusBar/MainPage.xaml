@@ -1,15 +1,28 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:local="clr-namespace:c3_ThemedImagesAndStatusBar"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              x:Class="c3_ThemedImagesAndStatusBar.MainPage">
 
-    <Grid>
+    <ContentPage.Behaviors>
+        <toolkit:StatusBarBehavior StatusBarColor="{Binding Source={x:Reference ThemedLabel}, Path=TextColor}" />
+    </ContentPage.Behaviors>
+    <VerticalStackLayout>
+        <Image Source="check_mark.png">
+            <Image.Behaviors>
+                <toolkit:IconTintColorBehavior TintColor="{Binding Source={x:Reference ThemedLabel}, Path=TextColor}" />
+            </Image.Behaviors>
+        </Image>
+        <Label x:Name="ThemedLabel"
+               Text="Hello, ghostNoté!"
+               TextColor="{AppThemeBinding Dark=Orange, Light=Gray}" />
         <Picker ItemsSource="{Binding Source={x:Static local:ThemeSettings.ThemesList}}"
                 SelectedItem="{Binding Source={x:Static local:ThemeSettings.Current}, Path=SelectedTheme}"
                 ItemDisplayBinding="{Binding Caption}"
                 VerticalOptions="Center"
                 HorizontalOptions="Center" />
-    </Grid>
+    </VerticalStackLayout>
 
 </ContentPage>
