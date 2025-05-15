@@ -1,9 +1,12 @@
-﻿namespace c4_DetailAndEditing;
+﻿using c4_DetailAndEditing.Views;
+
+namespace c4_DetailAndEditing;
 
 public partial class AppShell : Shell
 {
-	public AppShell()
-	{
-		InitializeComponent();
-	}
+    public AppShell()
+    {
+        InitializeComponent();
+        Routing.RegisterRoute(nameof(CustomerEditPage), typeof(CustomerEditPage));
+    }
 }
