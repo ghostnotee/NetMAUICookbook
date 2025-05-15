@@ -1,30 +1,36 @@
 using c4_DetailAndEditing.DataAccess;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.EntityFrameworkCore;
 
 namespace c4_DetailAndEditing.ViewModels;
 
-public partial class CustomerEditViewModel : ObservableObject, IQueryAttributable
+public partial class CustomerEditViewModel : CustomerDetailViewModel
 {
-    [ObservableProperty] private Customer? _item;
-    private Func<Customer, Task> ParentRefreshAction { get; set; } = null!;
+    [ObservableProperty] private bool _isNewItem;
 
-    public void ApplyQueryAttributes(IDictionary<string, object> query)
+    public override void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        if (query.TryGetValue("Item", out var currentItem)) Item = (Customer)currentItem;
-
-        if (query.TryGetValue("ParentRefreshAction", out var parentRefreshAction)) ParentRefreshAction = (Func<Customer, Task>)parentRefreshAction;
-
-        query.Clear();
+        if (query.TryGetValue("IsNewItem", out var isNew)) IsNewItem = (bool)isNew;
+        base.ApplyQueryAttributes(query);
     }
 
     [RelayCommand]
     private async Task SaveAsync()
     {
-        await using var context = new CrmContext();
-        context.Customers.Add(Item!);
+        var context = new CrmContext();
+        if (IsNewItem)
+        {
+            context.Customers.Add(Item);
+        }
+        else
+        {
+            context.Customers.Attach(Item);
+            context.Entry(Item).State = EntityState.Modified;
+        }
+
         await context.SaveChangesAsync();
-        await ParentRefreshAction(Item!);
+        await ParentRefreshAction(Item);
         await Shell.Current.GoToAsync("..");
     }
 }

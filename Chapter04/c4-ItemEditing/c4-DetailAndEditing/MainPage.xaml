@@ -31,6 +31,11 @@
                 <Grid RowDefinitions="40,40"
                       ColumnDefinitions="*,*"
                       Padding="10">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer
+                            Command="{Binding Path=BindingContext.ShowDetailFormCommand, Source={RelativeSource Mode=FindAncestor, AncestorType={x:Type CollectionView}}}"
+                            CommandParameter="{Binding}"/>
+                    </Grid.GestureRecognizers>
                     <Label Text="{Binding FirstName}" />
                     <Label Text="{Binding LastName}"
                            Grid.Column="1" />

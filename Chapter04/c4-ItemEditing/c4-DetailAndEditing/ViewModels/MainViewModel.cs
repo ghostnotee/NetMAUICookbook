@@ -42,10 +42,11 @@ public partial class MainViewModel : ObservableObject
     private async Task ShowNewFormAsync()
     {
         await Shell.Current.GoToAsync(nameof(CustomerEditPage),
-            parameters: new Dictionary<string, object>
+            new Dictionary<string, object>
             {
                 { "ParentRefreshAction", (Func<Customer, Task>)RefreshAddedAsync },
                 { "Item", new Customer() },
+                { "IsNewItem", true }
             });
     }
 
@@ -53,5 +54,29 @@ public partial class MainViewModel : ObservableObject
     {
         Customers!.Add(addedCustomer);
         return Task.CompletedTask;
+    }
+
+    [RelayCommand]
+    private async Task ShowDetailFormAsync(Customer customer)
+    {
+        await Shell.Current.GoToAsync(nameof(CustomerDetailPage),
+            new Dictionary<string, object>
+            {
+                { "Item", customer },
+                { "ParentRefreshAction", (Func<Customer, Task>)RefreshEditedAsync }
+            });
+    }
+
+    private async Task RefreshEditedAsync(Customer updatedCustomer)
+    {
+        var editedItemIndex = -1;
+        await Task.Run(() =>
+        {
+            editedItemIndex = Customers!.Select((customer, index) =>
+                new { customer, index }).First(item => item.customer.Id == updatedCustomer.Id).index;
+        });
+        if (editedItemIndex == -1)
+            return;
+        Customers![editedItemIndex] = updatedCustomer;
     }
 }
