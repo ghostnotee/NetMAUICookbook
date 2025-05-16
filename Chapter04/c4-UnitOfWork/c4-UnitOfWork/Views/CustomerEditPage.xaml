@@ -18,7 +18,6 @@
 
     <Grid>
         <VerticalStackLayout VerticalOptions="Start">
-            <Label Text="{Binding IsNewItem}" />
             <Entry Placeholder="First Name"
                    Text="{Binding Item.FirstName}" />
             <Entry Placeholder="Last Name"
