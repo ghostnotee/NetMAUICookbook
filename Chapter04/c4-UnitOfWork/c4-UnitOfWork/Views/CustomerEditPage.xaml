@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels1="clr-namespace:c4_UnitOfWork.ViewModels"
+             x:Class="c4_UnitOfWork.Views.CustomerEditPage"
+             Title="Edit Customer">
+    
+    <ContentPage.Triggers>
+        <DataTrigger Binding="{Binding IsNewItem}" TargetType="ContentPage">
+            <Setter Property="Title" Value="New Customer" />
+        </DataTrigger>
+    </ContentPage.Triggers>
+
+    <ContentPage.BindingContext>
+        <viewModels1:CustomerEditViewModel />
+    </ContentPage.BindingContext>
+
+    <Grid>
+        <VerticalStackLayout VerticalOptions="Start">
+            <Label Text="{Binding IsNewItem}" />
+            <Entry Placeholder="First Name"
+                   Text="{Binding Item.FirstName}" />
+            <Entry Placeholder="Last Name"
+                   Text="{Binding Item.LastName}" />
+            <Entry Placeholder="Email" Text="{Binding Item.Email}"
+                   ReturnCommand="{Binding SaveCommand}" />
+            <Button Text="Save" Command="{Binding SaveCommand}" />
+        </VerticalStackLayout>
+        <ActivityIndicator VerticalOptions="Center"
+                           HorizontalOptions="Center"
+                           IsRunning="{Binding SaveCommand.IsRunning}" />
+    </Grid>
+</ContentPage>
