@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace c4_UnitOfWork.ViewModels;
 
-public partial class CustomerEditViewModel : c4_UnitOfWork.ViewModels.CustomerDetailViewModel
+public partial class CustomerEditViewModel : CustomerDetailViewModel
 {
     [ObservableProperty] private bool _isNewItem;
 
@@ -21,16 +21,16 @@ public partial class CustomerEditViewModel : c4_UnitOfWork.ViewModels.CustomerDe
         var context = new CrmContext();
         if (IsNewItem)
         {
-            context.Customers.Add(Item);
+            context.Customers.Add(Item!);
         }
         else
         {
-            context.Customers.Attach(Item);
-            context.Entry(Item).State = EntityState.Modified;
+            context.Customers.Attach(Item!);
+            context.Entry(Item!).State = EntityState.Modified;
         }
 
         await context.SaveChangesAsync();
-        await ParentRefreshAction(Item);
+        await ParentRefreshAction(Item!);
         await Shell.Current.GoToAsync("..");
     }
 }

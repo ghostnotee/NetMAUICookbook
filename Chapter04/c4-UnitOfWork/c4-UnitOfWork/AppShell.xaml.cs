@@ -1,5 +1,4 @@
-﻿
-using c4_UnitOfWork.Views;
+﻿using c4_UnitOfWork.Views;
 
 namespace c4_UnitOfWork;
 
