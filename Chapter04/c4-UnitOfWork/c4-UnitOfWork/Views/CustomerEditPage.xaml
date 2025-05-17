@@ -5,16 +5,16 @@
              xmlns:viewModels1="clr-namespace:c4_UnitOfWork.ViewModels"
              x:Class="c4_UnitOfWork.Views.CustomerEditPage"
              Title="Edit Customer">
-    
-    <ContentPage.Triggers>
-        <DataTrigger Binding="{Binding IsNewItem}" TargetType="ContentPage">
-            <Setter Property="Title" Value="New Customer" />
-        </DataTrigger>
-    </ContentPage.Triggers>
 
     <ContentPage.BindingContext>
         <viewModels1:CustomerEditViewModel />
     </ContentPage.BindingContext>
+
+    <ContentPage.Triggers>
+        <DataTrigger Binding="{Binding IsNewItem}" TargetType="ContentPage" Value="true">
+            <Setter Property="Title" Value="New Customer" />
+        </DataTrigger>
+    </ContentPage.Triggers>
 
     <Grid>
         <VerticalStackLayout VerticalOptions="Start">
