@@ -1,7 +1,6 @@
 using c4_UnitOfWork.DataAccess;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Microsoft.EntityFrameworkCore;
 
 namespace c4_UnitOfWork.ViewModels;
 
@@ -18,19 +17,13 @@ public partial class CustomerEditViewModel : CustomerDetailViewModel
     [RelayCommand]
     private async Task SaveAsync()
     {
-        var context = new CrmContext();
+        using var uof = new CrmUnitOfWork();
         if (IsNewItem)
-        {
-            context.Customers.Add(Item!);
-        }
+            await uof.Items.AddAsync(Item);
         else
-        {
-            context.Customers.Attach(Item!);
-            context.Entry(Item!).State = EntityState.Modified;
-        }
-
-        await context.SaveChangesAsync();
-        await ParentRefreshAction(Item!);
+            await uof.Items.UpdateAsync(Item);
+        await uof.SaveAsync();
+        await ParentRefreshAction(Item);
         await Shell.Current.GoToAsync("..");
     }
 }

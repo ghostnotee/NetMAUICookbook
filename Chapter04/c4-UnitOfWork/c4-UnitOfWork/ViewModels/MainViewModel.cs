@@ -13,13 +13,10 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty] private bool _refreshing;
 
     [RelayCommand]
-    private async Task LoadCustomersAsync()
+    private async Task LoadCustomersAsync() 
     {
-        await Task.Run(() =>
-        {
-            using var context = new CrmContext();
-            Customers = new ObservableCollection<Customer>(context.Customers);
-        });
+        using var uniOfWork = new CrmUnitOfWork();
+        Customers = new ObservableCollection<Customer>(await uniOfWork.Items.GetAllAsync());
         Refreshing = false;
     }
 
@@ -30,12 +27,12 @@ public partial class MainViewModel : ObservableObject
     }
 
     [RelayCommand]
-    private void DeleteCustomer(Customer customer)
+    private async Task DeleteCustomerAsync(Customer customer)
     {
-        var context = new CrmContext();
-        context.Customers.Remove(customer);
-        context.SaveChanges();
-        Customers?.Remove(customer);
+        using var uniOfWork = new CrmUnitOfWork();
+        await uniOfWork.Items.DeleteAsync(customer);
+        await uniOfWork.SaveAsync();
+        Customers.Remove(customer);
     }
 
     [RelayCommand]

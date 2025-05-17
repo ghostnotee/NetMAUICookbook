@@ -20,14 +20,13 @@ public partial class CustomerDetailViewModel : ObservableObject, IQueryAttributa
     [RelayCommand]
     private async Task ShowEditFormAsync()
     {
-        var context = new CrmContext();
-        var editedItem = context.Customers.FirstOrDefault(c => c.Id == Item!.Id);
-
+        using var uof = new CrmUnitOfWork();
+        var editedItem = await uof.Items.GetByIdAsync(Item.Id);
         await Shell.Current.GoToAsync(nameof(CustomerEditPage),
             new Dictionary<string, object>
             {
                 { "ParentRefreshAction", (Func<Customer, Task>)ItemEditedAsync },
-                { "Item", editedItem! }
+                { "Item", editedItem }
             });
     }
 

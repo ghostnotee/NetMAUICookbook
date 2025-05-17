@@ -9,7 +9,7 @@ public partial class App : Application
 	{
 		Batteries_V2.Init();
 		using var context = new CrmContext();
-		context.Database!.EnsureCreated();
+		context.Database.EnsureCreated();
 		InitializeComponent();
 	}
 

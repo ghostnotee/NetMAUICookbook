@@ -25,7 +25,7 @@ public class CustomerRepository(CrmContext context) : IRepository<Customer>
 
     public async Task<Customer> GetByIdAsync(int id)
     {
-        return (await Task.Run(() => _dbSet.Find(id)))!;
+        return await Task.Run(() => _dbSet.Find(id));
     }
 
     public async Task UpdateAsync(Customer item)
