@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Microsoft.EntityFrameworkCore;
 
 namespace c4_UnitOfWork.DataAccess;
@@ -6,9 +7,11 @@ public class CustomerRepository(CrmContext context) : IRepository<Customer>
 {
     private readonly DbSet<Customer> _dbSet = context.Set<Customer>();
 
-    public async Task<IEnumerable<Customer>> GetAllAsync()
+    public async Task<IEnumerable<Customer>> GetAllAsync(Expression<Func<Customer, bool>>? filter = null)
     {
-        return await Task.Run(() => _dbSet.ToList());
+        IQueryable<Customer> query = _dbSet;
+        if (filter != null) query = query.Where(filter);
+        return await Task.Run(() => query.ToList());
     }
 
     public async Task AddAsync(Customer item)
