@@ -6,6 +6,12 @@ namespace c4_UiValidation.ViewModels;
 
 public partial class CustomerEditViewModel : CustomerDetailViewModel
 {
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))] [ObservableProperty]
+    private bool _isEmailValid;
+
+    [NotifyCanExecuteChangedFor(nameof(SaveCommand))] [ObservableProperty]
+    private bool _isFirstNameValid;
+
     [ObservableProperty] private bool _isNewItem;
 
     public override void ApplyQueryAttributes(IDictionary<string, object> query)
@@ -14,7 +20,7 @@ public partial class CustomerEditViewModel : CustomerDetailViewModel
         base.ApplyQueryAttributes(query);
     }
 
-    [RelayCommand]
+    [RelayCommand(CanExecute = nameof(CanSave))]
     private async Task SaveAsync()
     {
         using var uof = new CrmUnitOfWork();
@@ -35,4 +41,6 @@ public partial class CustomerEditViewModel : CustomerDetailViewModel
         await ParentRefreshAction(Item);
         await Shell.Current.GoToAsync("..");
     }
+
+    private bool CanSave() => IsEmailValid && IsFirstNameValid;
 }
