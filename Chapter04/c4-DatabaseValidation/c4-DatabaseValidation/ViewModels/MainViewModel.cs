@@ -31,7 +31,16 @@ public partial class MainViewModel : ObservableObject
     {
         using var uniOfWork = new CrmUnitOfWork();
         await uniOfWork.Items.DeleteAsync(customer);
-        await uniOfWork.SaveAsync();
+        try
+        {
+            await uniOfWork.SaveAsync();
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+            return;
+        }
+
         Customers?.Remove(customer);
     }
 

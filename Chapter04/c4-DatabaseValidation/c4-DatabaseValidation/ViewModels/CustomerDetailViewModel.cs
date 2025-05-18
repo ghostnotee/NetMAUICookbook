@@ -7,12 +7,12 @@ namespace c4_DatabaseValidation.ViewModels;
 
 public partial class CustomerDetailViewModel : ObservableObject, IQueryAttributable
 {
-    [ObservableProperty] private Customer? _item;
+    [ObservableProperty] private Customer _item = null!;
     protected Func<Customer, Task> ParentRefreshAction { get; set; } = null!;
 
     public virtual void ApplyQueryAttributes(IDictionary<string, object> query)
     {
-        if (query.TryGetValue("Item", out var currentItem)) Item = currentItem as Customer;
+        if (query.TryGetValue("Item", out var currentItem)) Item = (currentItem as Customer)!;
         if (query.TryGetValue("ParentRefreshAction", out var parentRefreshAction)) ParentRefreshAction = (parentRefreshAction as Func<Customer, Task>)!;
         query.Clear();
     }

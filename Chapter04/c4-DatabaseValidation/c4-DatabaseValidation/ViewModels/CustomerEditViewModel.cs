@@ -4,7 +4,7 @@ using CommunityToolkit.Mvvm.Input;
 
 namespace c4_DatabaseValidation.ViewModels;
 
-public partial class CustomerEditViewModel : c4_DatabaseValidation.ViewModels.CustomerDetailViewModel
+public partial class CustomerEditViewModel : CustomerDetailViewModel
 {
     [ObservableProperty] private bool _isNewItem;
 
@@ -18,11 +18,20 @@ public partial class CustomerEditViewModel : c4_DatabaseValidation.ViewModels.Cu
     private async Task SaveAsync()
     {
         using var uof = new CrmUnitOfWork();
-        if (IsNewItem)
-            await uof.Items.AddAsync(Item);
-        else
-            await uof.Items.UpdateAsync(Item);
-        await uof.SaveAsync();
+        try
+        {
+            if (IsNewItem)
+                await uof.Items.AddAsync(Item);
+            else
+                await uof.Items.UpdateAsync(Item);
+            await uof.SaveAsync();
+        }
+        catch (Exception ex)
+        {
+            await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
+            return;
+        }
+
         await ParentRefreshAction(Item);
         await Shell.Current.GoToAsync("..");
     }

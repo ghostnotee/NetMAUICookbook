@@ -15,6 +15,13 @@ public class CrmContext : DbContext
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.Entity<Customer>()
+            .HasIndex(c => c.Email)
+            .IsUnique();
+        builder.Entity<Customer>()
+            .Property(c => c.FirstName)
+            .IsRequired();
+
         builder.Entity<Customer>().HasData(new Customer
         {
             Id = 1,
