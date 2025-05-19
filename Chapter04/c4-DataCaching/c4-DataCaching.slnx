@@ -1,2 +1,3 @@
 <Solution>
+  <Project Path="c4-DataCaching\c4-DataCaching.csproj" Type="Classic C#" />
 </Solution>
