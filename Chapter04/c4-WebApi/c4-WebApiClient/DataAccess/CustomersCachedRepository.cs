@@ -4,19 +4,21 @@ namespace c4_WebApi.DataAccess;
 
 public class CustomersCachedRepository(IRepository<Customer> innerRepository, ICacheService cacheService) : IRepository<Customer>
 {
-    private const string CollectionName = "customers";
+    protected readonly ICacheService CacheService = cacheService;
+    protected readonly string CollectionName = "customers";
+    protected readonly IRepository<Customer> InnerRepository = innerRepository;
 
     public async Task<Customer> GetByIdAsync(int id)
     {
-        return await innerRepository.GetByIdAsync(id);
+        return await InnerRepository.GetByIdAsync(id);
     }
 
     public async Task<IEnumerable<Customer>> GetAllAsync(Expression<Func<Customer, bool>>? filter = null)
     {
         if (!cacheService.TryGetValue(CollectionName, out var customers))
         {
-            customers = await innerRepository.GetAllAsync();
-            cacheService.Set(CollectionName, customers);
+            customers = await InnerRepository.GetAllAsync();
+            CacheService.Set(CollectionName, customers);
         }
 
         return (IEnumerable<Customer>)customers!;
@@ -24,14 +26,14 @@ public class CustomersCachedRepository(IRepository<Customer> innerRepository, IC
 
     public async Task AddAsync(Customer item)
     {
-        await innerRepository.UpdateAsync(item);
-        cacheService.AddPendingAction(new CollectionCacheUpdate(CollectionName, cachedList => cachedList.Add(item)));
+        await InnerRepository.AddAsync(item);
+        CacheService.AddPendingAction(new CollectionCacheUpdate(CollectionName, cachedList => cachedList.Add(item)));
     }
 
     public async Task UpdateAsync(Customer item)
     {
-        await innerRepository.UpdateAsync(item);
-        cacheService.AddPendingAction(new CollectionCacheUpdate(CollectionName, cachedList =>
+        await InnerRepository.UpdateAsync(item);
+        CacheService.AddPendingAction(new CollectionCacheUpdate(CollectionName, cachedList =>
         {
             var editedItemIndex = ((List<Customer>)cachedList).FindIndex(c => c.Id == item.Id);
             cachedList[editedItemIndex] = item;
@@ -40,7 +42,7 @@ public class CustomersCachedRepository(IRepository<Customer> innerRepository, IC
 
     public async Task DeleteAsync(Customer item)
     {
-        await innerRepository.DeleteAsync(item);
-        cacheService.AddPendingAction(new CollectionCacheUpdate(CollectionName, cachedList => cachedList.Remove(item)));
+        await InnerRepository.DeleteAsync(item);
+        CacheService.AddPendingAction(new CollectionCacheUpdate(CollectionName, cachedList => cachedList.Remove(item)));
     }
 }

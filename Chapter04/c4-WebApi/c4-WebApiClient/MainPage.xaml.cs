@@ -1,6 +1,6 @@
 ﻿namespace c4_WebApi;
 
-public partial class MainPage : ContentPage
+public partial class MainPage: ContentPage
 {
     public MainPage()
     {

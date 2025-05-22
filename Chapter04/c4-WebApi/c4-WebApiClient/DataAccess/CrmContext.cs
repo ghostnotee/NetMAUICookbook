@@ -8,13 +8,18 @@ public class CrmContext : DbContext
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        var dbPath = Path.Combine(FileSystem.AppDataDirectory, "localdatabase.db");
+        var dbPath = Path.Combine(FileSystem.AppDataDirectory, "local-database.db");
         optionsBuilder.UseSqlite($"Filename={dbPath}");
         base.OnConfiguring(optionsBuilder);
     }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
+        builder.Entity<Customer>()
+            .HasKey(c => c.Id);
+        builder.Entity<Customer>()
+            .Property(c => c.Id)
+            .ValueGeneratedOnAdd();
         builder.Entity<Customer>()
             .HasIndex(c => c.Email)
             .IsUnique();
