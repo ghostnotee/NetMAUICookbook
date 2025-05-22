@@ -1,3 +1,4 @@
 <Solution>
   <Project Path="c4-WebApiClient\c4-WebApiClient.csproj" Type="Classic C#" />
+  <Project Path="c4-WebApiServer\c4-WebApiServer.csproj" Type="Classic C#" />
 </Solution>
