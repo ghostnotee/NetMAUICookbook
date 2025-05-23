@@ -8,27 +8,14 @@ public class CrmUnitOfWork : IDisposable, IUnitOfWork<Customer>
 
     public void Dispose()
     {
-        _context.Dispose();
     }
 
-    public IRepository<Customer> Items => _customerRepository ??= new CustomersCachedRepository(new CustomerRepository(_context), _cacheService);
+    public IRepository<Customer> Items => _customerRepository ??= new CustomersCachedRepository(new CustomerWebRepository(), _cacheService);
 
     public async Task SaveAsync()
     {
-        await Task.Run(() =>
-        {
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch
-            {
-                _cacheService.ClearCacheUpdateActions();
-                throw;
-            }
-
-            _cacheService.ExecuteCacheUpdateActions();
-        });
+        _cacheService.ExecuteCacheUpdateActions();
+        await Task.CompletedTask;
     }
 }
 
