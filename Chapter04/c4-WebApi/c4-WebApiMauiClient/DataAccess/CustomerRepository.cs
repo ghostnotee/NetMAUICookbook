@@ -7,10 +7,9 @@ public class CustomerRepository(CrmContext context) : IRepository<Customer>
 {
     private readonly DbSet<Customer> _dbSet = context.Set<Customer>();
 
-    public async Task<IEnumerable<Customer>> GetAllAsync(Expression<Func<Customer, bool>>? filter = null)
+    public async Task<IEnumerable<Customer>> GetAllAsync()
     {
         IQueryable<Customer> query = _dbSet;
-        if (filter != null) query = query.Where(filter);
         return await Task.Run(() => query.ToList());
     }
 

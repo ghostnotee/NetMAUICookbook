@@ -2,33 +2,22 @@ namespace c4_WebApiMauiClient.DataAccess;
 
 public class CrmUnitOfWork : IDisposable, IUnitOfWork<Customer>
 {
-    private readonly ICacheService _cacheService = MemoryCacheService.Instance;
+    readonly ICacheService CacheService = MemoryCacheService.Instance;
     private readonly CrmContext _context = new();
-    private IRepository<Customer>? _customerRepository;
+    IRepository<Customer> customerRepository;
 
     public void Dispose()
     {
-        _context.Dispose();
     }
 
-    public IRepository<Customer> Items => _customerRepository ??= new CustomersCachedRepository(new CustomerRepository(_context), _cacheService);
+    public IRepository<Customer> Items =>
+        customerRepository ??= new CustomersCachedRepository(new
+            CustomerWebRepository(), CacheService);
 
     public async Task SaveAsync()
     {
-        await Task.Run(() =>
-        {
-            try
-            {
-                _context.SaveChanges();
-            }
-            catch
-            {
-                _cacheService.ClearCacheUpdateActions();
-                throw;
-            }
-
-            _cacheService.ExecuteCacheUpdateActions();
-        });
+        CacheService.ExecuteCacheUpdateActions();
+        await Task.CompletedTask;
     }
 }
 

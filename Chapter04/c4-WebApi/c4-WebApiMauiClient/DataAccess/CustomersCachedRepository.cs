@@ -13,7 +13,7 @@ public class CustomersCachedRepository(IRepository<Customer> innerRepository, IC
         return await InnerRepository.GetByIdAsync(id);
     }
 
-    public async Task<IEnumerable<Customer>> GetAllAsync(Expression<Func<Customer, bool>>? filter = null)
+    public async Task<IEnumerable<Customer>> GetAllAsync()
     {
         if (!CacheService.TryGetValue(CollectionName, out var customers))
         {
