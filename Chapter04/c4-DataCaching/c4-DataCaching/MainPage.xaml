@@ -7,7 +7,7 @@
              x:Class="c4_DataCaching.MainPage"
              x:Name="Page">
 
-     <ContentPage.BindingContext>
+    <ContentPage.BindingContext>
         <viewModels:MainViewModel />
     </ContentPage.BindingContext>
 
