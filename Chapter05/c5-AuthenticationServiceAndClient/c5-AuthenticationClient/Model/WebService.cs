@@ -11,7 +11,7 @@ public class WebService
 
     private readonly HttpClient _httpClient = new() { BaseAddress = new Uri(BaseAddress) };
 
-    public static WebService Instance { get; } = new();
+    internal static WebService Instance { get; } = new();
 
     public async Task<BearerTokenInfo> Authenticate(string email, string password)
     {
