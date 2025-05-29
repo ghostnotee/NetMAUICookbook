@@ -1,4 +1,5 @@
 using c5_AuthenticationClient.Model;
+using c5_AuthenticationClient.Views;
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 
@@ -18,7 +19,7 @@ public partial class MainViewModel : ObservableObject
         try
         {
             var tokenInfo = await _webService.Authenticate(Email, Password);
-            await Shell.Current.DisplayAlert("Token", tokenInfo.AccessToken, "OK");
+            await Shell.Current.GoToAsync(nameof(UsersPage));
         }
         catch (Exception ex)
         {

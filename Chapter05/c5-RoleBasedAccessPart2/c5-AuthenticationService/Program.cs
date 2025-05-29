@@ -104,7 +104,7 @@ app.MapGet("/users/candelete", async (
     IAuthorizationService authorizationService) =>
 {
     var authResult = await authorizationService.AuthorizeAsync(httpContext.User, "AdminPolicy");
-    return Results.Ok(authResult);
+    return Results.Ok(authResult.Succeeded);
 });
 
 app.MapGet("/me", async (ClaimsPrincipal principal, UserManager<User> userManager) =>

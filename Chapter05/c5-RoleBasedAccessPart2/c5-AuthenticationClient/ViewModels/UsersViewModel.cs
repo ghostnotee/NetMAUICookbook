@@ -17,7 +17,7 @@ public partial class UsersViewModel : ObservableObject
     [ObservableProperty] private ObservableCollection<User> _users = null!;
 
     [RelayCommand(CanExecute = nameof(CanDeleteUser))]
-    private async Task DeleteUser(User user)
+    async Task DeleteUser(User user)
     {
         try
         {
