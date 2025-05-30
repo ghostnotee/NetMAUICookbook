@@ -1,5 +1,10 @@
 using System.Security.Claims;
+using System.Text.Json;
+using System.Text.Json.Nodes;
 using c5_AuthenticationService;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -41,9 +46,19 @@ builder.Services.AddSwaggerGen(c =>
     });
 });
 
-builder.Services
-    .AddAuthentication()
-    .AddBearerToken(IdentityConstants.BearerScheme);
+builder.Services.AddAuthentication(options =>
+    {
+        options.DefaultSignInScheme = IdentityConstants.BearerScheme;
+        options.DefaultAuthenticateScheme = IdentityConstants.BearerScheme;
+        options.DefaultScheme = IdentityConstants.BearerScheme;
+    })
+    .AddCookie(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Google:ClientId"]!;
+        options.ClientSecret = builder.Configuration["Google:ClientSecret"]!;
+        options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    }).AddBearerToken(IdentityConstants.BearerScheme);
 
 builder.Services
     .AddIdentityCore<User>()
@@ -54,11 +69,9 @@ builder.Services
 
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlite(@"Data Source=mydatabase.db"));
 
-builder.Services.AddAuthorization(options =>
-{
-    options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
-    options.AddPolicy("UserPolicy", policy => policy.RequireRole("User"));
-});
+builder.Services.AddAuthorizationBuilder()
+    .AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"))
+    .AddPolicy("UserPolicy", policy => policy.RequireRole("User"));
 
 
 var app = builder.Build();
@@ -132,7 +145,7 @@ using (var scope = app.Services.CreateScope())
         "123Password123!",
         new DateOnly(1991, 4, 20),
         "Admin");
-    
+
     for (var i = 1; i < 10; i++)
         await userManager.CreateUserWithRoleAsync(
             roleManager,
@@ -140,5 +153,37 @@ using (var scope = app.Services.CreateScope())
             "123Password123!",
             new DateOnly(2000, 1, i), "User");
 }
+
+app.MapGet("/mauth/google", (HttpContext httpContext) =>
+{
+    var props = new AuthenticationProperties { RedirectUri = "mauth/google/callback" };
+    return Results.Challenge(props, new List<string> { GoogleDefaults.AuthenticationScheme });
+});
+
+app.MapGet("/mauth/google/callback", async (
+    HttpContext context,
+    UserManager<User> userManager,
+    RoleManager<IdentityRole> roleManager) =>
+{
+    var authResult = await context.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+    if (!authResult.Succeeded) return Results.Redirect("myapp://");
+    var email = authResult.Principal.FindFirstValue(ClaimTypes.Email);
+    await userManager.CreateUserWithRoleAsync(roleManager, email, null, new DateOnly(2000, 1, 1), "User");
+
+    using var responseBody = new MemoryStream();
+    context.Response.Body = responseBody;
+    await context.SignInAsync(IdentityConstants.BearerScheme, new ClaimsPrincipal(authResult.Principal.Identity));
+    context.Response.Body.Seek(0, SeekOrigin.Begin);
+    var responseText = await new StreamReader(context.Response.Body).ReadToEndAsync();
+    var tokenData = JsonSerializer.Deserialize<JsonNode>(responseText);
+
+    var token = tokenData["accessToken"].GetValue<string>();
+    var refreshToken = tokenData["refreshToken"].GetValue<string>();
+    var expiresIn = tokenData["expiresIn"].GetValue<int>();
+
+    var redirectUrl = $"myapp://?access_token={token}&refresh_token={refreshToken}&expires_in={expiresIn}";
+    return Results.Redirect(redirectUrl);
+});
 
 app.Run();
