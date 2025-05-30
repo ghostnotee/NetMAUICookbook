@@ -8,6 +8,7 @@ namespace c5_AuthenticationClient.ViewModels;
 public partial class UsersViewModel : ObservableObject
 {
     private readonly WebService _webService = WebService.Instance;
+    private readonly SessionService _sessionService = SessionService.Instance;
 
     [ObservableProperty] [NotifyCanExecuteChangedFor(nameof(DeleteUserCommand))]
     private bool _allowDelete;
@@ -38,5 +39,13 @@ public partial class UsersViewModel : ObservableObject
         Users = new ObservableCollection<User>(await _webService.GetUsersAsync());
         AllowDelete = await _webService.CanDeleteUsersAsync();
         LoggedInUser = await _webService.GetCurrentUserAsync();
+    }
+    
+    [RelayCommand]
+    private async Task LogOut()
+    {
+        _sessionService.ClearTokenStorage();
+        _webService.ResetAuthHeader();
+        await Shell.Current.GoToAsync("..");
     }
 }

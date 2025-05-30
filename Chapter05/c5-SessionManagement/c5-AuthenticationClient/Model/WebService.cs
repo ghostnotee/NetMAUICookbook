@@ -18,6 +18,11 @@ public class WebService
         return await RequestTokenAsync("login/", new { email, password });
     }
 
+    public async Task<BearerTokenInfo> RefreshTokenAsync(string refreshToken)
+    {
+        return await RequestTokenAsync("refresh/", new { refreshToken });
+    }
+
     private async Task<BearerTokenInfo> RequestTokenAsync(string url, object postContent)
     {
         var response =
@@ -27,13 +32,18 @@ public class WebService
         var tokenInfo = (await response.Content.ReadFromJsonAsync<BearerTokenInfo>())!;
         tokenInfo.TokenTimestamp = DateTime.UtcNow;
         SetAuthHeader(tokenInfo.AccessToken!);
+        await SessionService.Instance.SaveTokenToStorage(tokenInfo);
         return tokenInfo;
     }
 
-    private void SetAuthHeader(string token)
+    internal void SetAuthHeader(string token)
     {
-        _httpClient.DefaultRequestHeaders.Authorization =
-            new AuthenticationHeaderValue("Bearer", token);
+        _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+    }
+
+    public void ResetAuthHeader()
+    {
+        _httpClient.DefaultRequestHeaders.Authorization = null;
     }
 
     public async Task<IEnumerable<User>> GetUsersAsync()
@@ -68,10 +78,10 @@ public class WebService
 
     public async Task GoogleAuthAsync()
     {
-        WebAuthenticatorResult authResult = await WebAuthenticator.Default.AuthenticateAsync(
+        var authResult = await WebAuthenticator.Default.AuthenticateAsync(
             new Uri($"{BaseAddress}mauth/google"),
             new Uri("myapp://"));
-        BearerTokenInfo tokenInfo = new BearerTokenInfo
+        var tokenInfo = new BearerTokenInfo
         {
             AccessToken = authResult.AccessToken,
             RefreshToken = authResult.RefreshToken,
@@ -79,5 +89,6 @@ public class WebService
             TokenTimestamp = DateTime.UtcNow
         };
         SetAuthHeader(tokenInfo.AccessToken);
+        await SessionService.Instance.SaveTokenToStorage(tokenInfo);
     }
 }

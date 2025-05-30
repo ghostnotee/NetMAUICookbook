@@ -8,6 +8,11 @@
              Title="{Binding LoggedInUser.Email, StringFormat='Hi, {0}'}"
              x:Name="Page">
 
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Log Out"
+                     Command="{Binding LogOutCommand}" />
+    </ContentPage.ToolbarItems>
+
     <ContentPage.Behaviors>
         <toolkit:EventToCommandBehavior EventName="Appearing" Command="{Binding InitializeCommand}"
                                         BindingContext="{Binding Source={x:Reference Page}, Path=BindingContext}" />
