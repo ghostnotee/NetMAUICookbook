@@ -26,4 +26,18 @@ public partial class MainViewModel : ObservableObject
             await Shell.Current.DisplayAlert("Error", ex.Message, "OK");
         }
     }
+
+    [RelayCommand]
+    private async Task GoogleSignInAsync()
+    {
+        try
+        {
+            await _webService.GoogleAuthAsync();
+            await Shell.Current.GoToAsync(nameof(UsersPage));
+        }
+        catch (Exception ex) when (!(ex is TaskCanceledException))
+        {
+            await Shell.Current.DisplayAlert("Sign in failed", ex.Message, "OK");
+        }
+    }
 }

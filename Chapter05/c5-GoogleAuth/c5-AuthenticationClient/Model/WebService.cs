@@ -65,4 +65,19 @@ public class WebService
         var json = await response.Content.ReadAsStringAsync();
         return JsonSerializer.Deserialize<User>(json, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
     }
+
+    public async Task GoogleAuthAsync()
+    {
+        WebAuthenticatorResult authResult = await WebAuthenticator.Default.AuthenticateAsync(
+            new Uri($"{BaseAddress}mauth/google"),
+            new Uri("myapp://"));
+        BearerTokenInfo tokenInfo = new BearerTokenInfo
+        {
+            AccessToken = authResult.AccessToken,
+            RefreshToken = authResult.RefreshToken,
+            ExpiresIn = int.Parse(authResult.Properties["expires_in"]),
+            TokenTimestamp = DateTime.UtcNow
+        };
+        SetAuthHeader(tokenInfo.AccessToken);
+    }
 }

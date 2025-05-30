@@ -17,6 +17,9 @@
                IsPassword="True" />
         <Button Text="Log In"
                 Command="{Binding LogInCommand}" />
+        
+        <Button Text="Sign in with Google"
+                Command="{Binding GoogleSignInCommand}"/>
     </VerticalStackLayout>
 
 </ContentPage>
