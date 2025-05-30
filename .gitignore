@@ -485,3 +485,4 @@ $RECYCLE.BIN/
 
 **/mydatabase.db
 **/mydatabase.db*
+**/appsettings.Development.json
