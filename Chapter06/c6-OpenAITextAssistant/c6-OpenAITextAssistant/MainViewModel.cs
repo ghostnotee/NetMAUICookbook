@@ -10,7 +10,7 @@ public partial class MainViewModel : ObservableObject
     [ObservableProperty] private string? _letterText;
 
     private readonly ChatClient _aiClient = new("gpt-3.5-turbo",
-        "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");
+        "[YOUR OPENAI API KEY HERE]");
 
     [RelayCommand]
     private async Task FixErrorsAsync()
