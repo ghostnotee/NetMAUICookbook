@@ -4,7 +4,7 @@ namespace c6_AIFaceDetection;
 
 public class NormalizationData
 {
-    [ColumnName("input")] [VectorType(3, 240, 320)]
+    [ColumnName("input")] [VectorType(3, 480, 640)]
     public VBuffer<float> Reshape;
 
     public static void MeanAndScaleNormalization(NormalizationData input, NormalizationData output)

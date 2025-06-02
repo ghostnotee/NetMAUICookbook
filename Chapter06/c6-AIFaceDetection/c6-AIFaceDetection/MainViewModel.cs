@@ -29,8 +29,8 @@ public partial class MainViewModel : ObservableObject
                 nameof(ImageNetData.ImagePath))
             .Append(_mlContext.Transforms.ResizeImages(
                 "input",
-                320,
-                240,
+                640,
+                480,
                 "input",
                 ResizingKind.Fill))
             .Append(_mlContext.Transforms.ExtractPixels("input"))
