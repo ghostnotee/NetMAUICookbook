@@ -12,7 +12,7 @@ public partial class MainViewModel : ObservableObject
     private readonly string _modelName = "version-RFB-640.onnx";
     private readonly string _sourceImageName = "Photo.jpg";
 
-    private readonly MLContext mlContext = new();
+    private readonly MLContext _mlContext = new();
 
     [ObservableProperty] private ImageSource? _faceImage;
     private ITransformer _mlModel;
@@ -23,21 +23,21 @@ public partial class MainViewModel : ObservableObject
 
     private ITransformer LoadModel(string modelLocation)
     {
-        var data = mlContext.Data.LoadFromEnumerable(new List<ImageNetData>());
-        return mlContext.Transforms.LoadImages(
+        var data = _mlContext.Data.LoadFromEnumerable(new List<ImageNetData>());
+        return _mlContext.Transforms.LoadImages(
                 "input", "",
                 nameof(ImageNetData.ImagePath))
-            .Append(mlContext.Transforms.ResizeImages(
+            .Append(_mlContext.Transforms.ResizeImages(
                 "input",
                 320,
                 240,
                 "input",
                 ResizingKind.Fill))
-            .Append(mlContext.Transforms.ExtractPixels("input"))
-            .Append(mlContext.Transforms.CustomMapping<NormalizationData, NormalizationData>(
+            .Append(_mlContext.Transforms.ExtractPixels("input"))
+            .Append(_mlContext.Transforms.CustomMapping<NormalizationData, NormalizationData>(
                 NormalizationData.MeanAndScaleNormalization,
                 null))
-            .Append(mlContext.Transforms.ApplyOnnxModel(
+            .Append(_mlContext.Transforms.ApplyOnnxModel(
                 modelFile: modelLocation,
                 outputColumnNames: new[] { "scores", "boxes" },
                 inputColumnNames: new[] { "input" }))
@@ -57,7 +57,7 @@ public partial class MainViewModel : ObservableObject
     private IDataView GetScoredData(string imagePath)
     {
         IEnumerable<ImageNetData> images = new List<ImageNetData> { new() { ImagePath = imagePath } };
-        var imageDataView = mlContext.Data.LoadFromEnumerable(images);
+        var imageDataView = _mlContext.Data.LoadFromEnumerable(images);
         return _mlModel.Transform(imageDataView);
     }
 

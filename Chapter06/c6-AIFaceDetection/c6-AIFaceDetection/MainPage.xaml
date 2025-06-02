@@ -1,8 +1,31 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+﻿<?xml version="1.0" encoding="utf-8"?>
+
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="c6_AIFaceDetection.MainPage">
+             xmlns:c6AiFaceDetection="clr-namespace:c6_AIFaceDetection"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
+             x:Class="c6_AIFaceDetection.MainPage"
+             x:Name="Pageage">
 
-    
+    <ContentPage.BindingContext>
+        <c6AiFaceDetection:MainViewModel />
+    </ContentPage.BindingContext>
+    <ContentPage.Behaviors>
+        <toolkit:EventToCommandBehavior
+            EventName="Appearing"
+            Command="{Binding InitializeCommand}"
+            BindingContext="{Binding Source={x:Reference Page}, Path=BindingContext}" />
+    </ContentPage.Behaviors>
+    <Grid RowDefinitions="*,50, 300"
+          RowSpacing="20"
+          Padding="20">
+        <Image Source="{Binding SourceImage}" />
+        <Button Text="Find face"
+                Command="{Binding FindFaceCommand}"
+                Grid.Row="1"
+                FontSize="20" />
+        <Image Source="{Binding FaceImage}"
+               Grid.Row="2" />
+    </Grid>
 
 </ContentPage>
