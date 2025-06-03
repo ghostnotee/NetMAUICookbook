@@ -1,3 +1,4 @@
 <Solution>
+  <Project Path="c6-FileUploadingClient\c6-FileUploadingClient.csproj" Type="Classic C#" />
   <Project Path="c6-FileUploading\c6-FileUploading.csproj" Type="Classic C#" />
 </Solution>
