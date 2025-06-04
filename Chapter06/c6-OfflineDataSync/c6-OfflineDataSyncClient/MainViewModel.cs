@@ -70,9 +70,9 @@ public partial class MainViewModel : ObservableObject
     {
         Task.Run(async () =>
         {
-            using var context = new LocalAppDbContext();
+            await using var context = new LocalAppDbContext();
             context.Blogs.Add(newBlog);
-            context.SaveChanges();
+            await context.SaveChangesAsync();
             var pushResult = await context.PushAsync();
             if (pushResult.IsSuccessful) UpdateCollectionItem(newBlog.Id);
         });

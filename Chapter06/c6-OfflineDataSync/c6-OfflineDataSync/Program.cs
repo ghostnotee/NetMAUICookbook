@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
 
-var connectionString = "Server=localhost,1433;Database=ODataStudent;User=sa;Password=yourStrong(!)Password;TrustServerCertificate=True";
+var connectionString = "Server=localhost,1433;Database=MyDatabase;User=sa;Password=yourStrong(!)Password;TrustServerCertificate=True";
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddDatasyncServices();
 builder.Services.AddControllers();
@@ -22,6 +22,11 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    await context.InitializeDatabaseAsync().ConfigureAwait(false);
+}
 
 app.MapControllers();
 

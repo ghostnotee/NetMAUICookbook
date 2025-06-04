@@ -19,17 +19,23 @@ public class LocalAppDbContext : OfflineDbContext
     {
         HttpClientOptions clientOptions = new()
         {
-            Endpoint = new Uri("https://zggwkbtz-7128.euw.devtunnels.ms/")
+            Endpoint = new Uri("https://zggwkbtz-7128.euw.devtunnels.ms/"),
         };
         _ = optionsBuilder.UseHttpClientOptions(clientOptions);
     }
 
     public async Task SynchronizeAsync(CancellationToken cancellationToken = default)
     {
-        var pushResult = await this.PushAsync(cancellationToken);
-        if (!pushResult.IsSuccessful) throw new ApplicationException($"Push failed: {pushResult.FailedRequests.FirstOrDefault().Value.ReasonPhrase}");
+        PushResult pushResult = await this.PushAsync(cancellationToken);
+        if (!pushResult.IsSuccessful)
+        {
+            throw new ApplicationException($"Push failed: {pushResult.FailedRequests.FirstOrDefault().Value.ReasonPhrase}");
+        }
 
-        var pullResult = await this.PullAsync(cancellationToken);
-        if (!pullResult.IsSuccessful) throw new ApplicationException($"Pull failed: {pullResult.FailedRequests.FirstOrDefault().Value.ReasonPhrase}");
+        PullResult pullResult = await this.PullAsync(cancellationToken);
+        if (!pullResult.IsSuccessful)
+        {
+            throw new ApplicationException($"Pull failed: {pullResult.FailedRequests.FirstOrDefault().Value.ReasonPhrase}");
+        }
     }
 }

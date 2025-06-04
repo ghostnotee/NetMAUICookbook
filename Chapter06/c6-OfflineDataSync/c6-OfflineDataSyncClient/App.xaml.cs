@@ -1,14 +1,20 @@
-﻿namespace c6_OfflineDataSyncClient;
+﻿using c6_OfflineDataSyncClient.Model;
+using SQLitePCL;
+
+namespace c6_OfflineDataSyncClient;
 
 public partial class App : Application
 {
-	public App()
-	{
-		InitializeComponent();
-	}
+    public App()
+    {
+        using var context = new LocalAppDbContext();
+        Batteries_V2.Init();
+        context.Database.EnsureCreated();
+        InitializeComponent();
+    }
 
-	protected override Window CreateWindow(IActivationState? activationState)
-	{
-		return new Window(new AppShell());
-	}
+    protected override Window CreateWindow(IActivationState? activationState)
+    {
+        return new Window(new AppShell());
+    }
 }
