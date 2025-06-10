@@ -4,5 +4,6 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="c7_CrossPlatformApi.MainPage">
 
-
+    <Label x:Name="Label"/>
+    
 </ContentPage>
