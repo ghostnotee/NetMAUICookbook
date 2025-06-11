@@ -2,22 +2,19 @@
 
 public partial class MainPage : ContentPage
 {
-	int count = 0;
+    public MainPage()
+    {
+        InitializeComponent();
+    }
 
-	public MainPage()
-	{
-		InitializeComponent();
-	}
+    private void OnEntryHandlerChanged(object sender, EventArgs e)
+    {
+        Entry entry = (Entry)sender;
+        PlatformCustomizer.CustomizeEntry(entry.Handler.PlatformView);
+    }
+}
 
-	private void OnCounterClicked(object? sender, EventArgs e)
-	{
-		count++;
-
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
-
-		SemanticScreenReader.Announce(CounterBtn.Text);
-	}
+public static partial class PlatformCustomizer
+{
+    public static partial void CustomizeEntry(object platformView);
 }
