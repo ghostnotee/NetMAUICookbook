@@ -1,6 +1,6 @@
 ﻿using Foundation;
 
-namespace c8_SimplifiedItemTemplate;
+namespace c8_DebugVsRelease;
 
 [Register("AppDelegate")]
 public class AppDelegate : MauiUIApplicationDelegate

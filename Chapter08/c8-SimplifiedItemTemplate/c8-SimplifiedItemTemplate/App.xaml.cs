@@ -1,4 +1,4 @@
-﻿namespace c8_SimplifiedItemTemplate;
+﻿namespace c8_DebugVsRelease;
 
 public partial class App : Application
 {

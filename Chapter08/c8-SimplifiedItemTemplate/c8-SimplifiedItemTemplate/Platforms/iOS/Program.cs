@@ -1,7 +1,7 @@
 ﻿using ObjCRuntime;
 using UIKit;
 
-namespace c8_SimplifiedItemTemplate;
+namespace c8_DebugVsRelease;
 
 public class Program
 {

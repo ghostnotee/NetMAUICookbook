@@ -1,9 +1,10 @@
-﻿namespace c8_SimplifiedItemTemplate;
+﻿namespace c8_DebugVsRelease;
 
 public partial class AppShell : Shell
 {
-	public AppShell()
-	{
-		InitializeComponent();
-	}
+    public AppShell()
+    {
+        InitializeComponent();
+        Routing.RegisterRoute(nameof(TestPage), typeof(TestPage));
+    }
 }

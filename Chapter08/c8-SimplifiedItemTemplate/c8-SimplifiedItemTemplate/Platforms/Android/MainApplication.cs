@@ -1,7 +1,7 @@
 ﻿using Android.App;
 using Android.Runtime;
 
-namespace c8_SimplifiedItemTemplate;
+namespace c8_DebugVsRelease;
 
 [Application]
 public class MainApplication : MauiApplication

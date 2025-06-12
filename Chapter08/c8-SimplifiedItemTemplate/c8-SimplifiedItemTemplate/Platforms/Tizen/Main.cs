@@ -2,7 +2,7 @@ using System;
 using Microsoft.Maui;
 using Microsoft.Maui.Hosting;
 
-namespace c8_SimplifiedItemTemplate;
+namespace c8_DebugVsRelease;
 
 class Program : MauiApplication
 {
