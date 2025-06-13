@@ -33,4 +33,25 @@ public partial class MainPage : ContentPage
 
         return outputStream;
     }
+
+    private async void OnSelectImageClick(object sender, EventArgs e)
+    {
+        PickOptions options = new()
+        {
+            PickerTitle = "Select an image",
+            FileTypes = FilePickerFileType.Images
+        };
+        
+        FileResult? result = await FilePicker.Default.PickAsync(options);
+        if (result != null)
+        {
+            Stream imageStream = await result.OpenReadAsync();
+            imageStream = ResizeImage(imageStream, 40, 40);
+            imageControl.Source = ImageSource.FromStream(() => imageStream);
+
+            using FileStream fileStream = File.Create(Path.Combine(FileSystem.Current.AppDataDirectory, "test.png"));
+            await imageStream.CopyToAsync(fileStream);
+            imageStream.Seek(0, SeekOrigin.Begin);
+        }
+    }
 }
