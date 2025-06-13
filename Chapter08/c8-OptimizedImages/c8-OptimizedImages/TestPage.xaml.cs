@@ -9,13 +9,12 @@ public partial class TestPage : LoadingTimePage
         InitializeComponent();
 
         var items = new ObservableCollection<Item>();
-        for (var i = 1; i < 30; i++) items.Add(new Item(i, $"Item{i}"));
+        for (var i = 1; i < 30; i++) items.Add(new Item(ImageSource.FromFile(Path.Combine(FileSystem.Current.AppDataDirectory, "test.png"))));
         CollectionView.ItemsSource = items;
     }
 }
 
-public class Item(int id, string name)
+public class Item(ImageSource icon)
 {
-    public int Id { get; set; } = id;
-    public string Name { get; set; } = name;
+    public ImageSource Icon { get; set; } = icon;
 }

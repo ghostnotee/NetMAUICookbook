@@ -9,12 +9,9 @@
     <CollectionView x:Name="CollectionView">
         <CollectionView.ItemTemplate>
             <DataTemplate>
-                <Border>
-                    <HorizontalStackLayout Spacing="10">
-                        <Button Text="{Binding Id}" />
-                        <Label Text="{Binding Name}" />
-                    </HorizontalStackLayout>
-                </Border>
+                <Image Source="{Binding Icon}"
+                       WidthRequest="50"
+                       HeightRequest="50" />
             </DataTemplate>
         </CollectionView.ItemTemplate>
     </CollectionView>
