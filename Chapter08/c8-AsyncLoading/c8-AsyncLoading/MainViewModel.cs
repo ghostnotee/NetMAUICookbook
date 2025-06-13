@@ -5,9 +5,9 @@ namespace c8_AsyncLoading;
 
 public partial class MainViewModel : ObservableObject
 {
-    [ObservableProperty] private string description;
+    [ObservableProperty] private string? _description;
 
-    [ObservableProperty] private string productName;
+    [ObservableProperty] private string? _productName;
 
     [RelayCommand]
     private async Task LoadDataAsync()
