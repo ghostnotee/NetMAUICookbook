@@ -8,14 +8,35 @@
 
     <CollectionView x:Name="CollectionView">
         <CollectionView.ItemTemplate>
+
             <DataTemplate>
-                <Border>
-                    <HorizontalStackLayout Spacing="10">
-                        <Button Text="{Binding Id}" />
-                        <Label Text="{Binding Name}" />
+                <Grid Padding="10"
+                      ColumnDefinitions="Auto, *, Auto, *, Auto, *"
+                      RowDefinitions="Auto,Auto,Auto">
+                    <Label Text="ID: " FontAttributes="Bold" />
+                    <Label Text="Name: " FontAttributes="Bold" Grid.Row="1" />
+                    <Label Text="Prop1: " FontAttributes="Bold" Grid.Column="2" />
+                    <Label Text="Prop2: " FontAttributes="Bold" Grid.Row="1" Grid.Column="2" />
+                    <Label Text="Prop3: " FontAttributes="Bold" Grid.Column="4" />
+                    <Label Text="Prop4: " FontAttributes="Bold" Grid.Column="4" Grid.Row="1" />
+                    <Label Text="{Binding Id}" Grid.Row="0" Grid.Column="1" />
+                    <Label Text="{Binding Name}" Grid.Row="1" Grid.Column="1" />
+                    <Label Text="{Binding Prop1}" Grid.Row="0" Grid.Column="3" />
+                    <Label Text="{Binding Prop2}" Grid.Row="1" Grid.Column="3" />
+                    <Label Text="{Binding Prop3}" Grid.Row="0" Grid.Column="5" />
+                    <Label Text="{Binding Prop4}" Grid.Row="1" Grid.Column="5" />
+                    <HorizontalStackLayout Grid.Row="6"
+                                           Grid.ColumnSpan="6"
+                                           Spacing="5"
+                                           HeightRequest="28">
+                        <Button Text="Delete" Padding="5" />
+                        <Button Text="Share" Padding="5" />
+                        <Button Text="Duplicate" Padding="5" />
+                        <Button Text="Move" Padding="5" />
                     </HorizontalStackLayout>
-                </Border>
+                </Grid>
             </DataTemplate>
+
         </CollectionView.ItemTemplate>
     </CollectionView>
 
