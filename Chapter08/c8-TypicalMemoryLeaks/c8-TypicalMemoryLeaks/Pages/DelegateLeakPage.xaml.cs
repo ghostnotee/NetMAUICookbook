@@ -15,10 +15,10 @@ public partial class DelegateLeakPage : ContentPage
 
 
         //Step 2
-        //timer = Dispatcher.CreateTimer();
-        //timer.Interval = TimeSpan.FromSeconds(1);
-        //Appearing += OnAppearing;
-        //Disappearing += OnDisappearing;
+        timer = Dispatcher.CreateTimer();
+        timer.Interval = TimeSpan.FromSeconds(1);
+        Appearing += OnAppearing;
+        Disappearing += OnDisappearing;
     }
 
     int ticks = 0;
@@ -30,18 +30,18 @@ public partial class DelegateLeakPage : ContentPage
     }
 
     //Step 2
-    //private void TickEventHandler(object sender, EventArgs e) =>
-    //    TimerTick();
+    private void TickEventHandler(object sender, EventArgs e) => TimerTick();
 
-    //IDispatcherTimer timer;
-    //private void OnAppearing(object sender, EventArgs e)
-    //{
-    //    timer.Tick += TickEventHandler;
-    //    timer.Start();
-    //}
-    //private void OnDisappearing(object sender, EventArgs e)
-    //{
-    //    timer.Stop();
-    //    timer.Tick -= TickEventHandler;
-    //}
+    IDispatcherTimer timer;
+    
+    private void OnAppearing(object sender, EventArgs e)
+    {
+        timer.Tick += TickEventHandler;
+        timer.Start();
+    }
+    private void OnDisappearing(object sender, EventArgs e)
+    {
+       timer.Stop();
+       timer.Tick -= TickEventHandler;
+    }
 }

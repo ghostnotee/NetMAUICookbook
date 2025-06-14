@@ -9,15 +9,16 @@ public partial class ControlLeakPage : ContentPage
         MemoryHelper.Objects.Add(new WeakReference(this));
 
         //Step 5
-        //this.Disappearing += ControlLeakPage_Disappearing;
+        this.Disappearing += ControlLeakPage_Disappearing;
     }
 
     //Step 5
-    //private void ControlLeakPage_Disappearing(object sender, EventArgs e)
-    //{
-    //    rootGrid.Children.Remove(customLabel);
-    //}
+    private void ControlLeakPage_Disappearing(object sender, EventArgs e)
+    {
+        rootGrid.Children.Remove(customLabel);
+    }
 }
+
 public class CustomLabel : Label
 {
     public CustomLabel()

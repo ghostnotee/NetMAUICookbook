@@ -9,9 +9,9 @@ public partial class DirectReferenceLeakPage : ContentPage
         MemoryHelper.Objects.Add(new WeakReference(this));
 
         //Issue
-        ((App)App.Current).OpenedChildPages.Add(this);
+        //((App)App.Current).OpenedChildPages.Add(this);
 
         //Step 4
-        //((App)App.Current).OpenedChildPages.Add(new WeakReference(this));
+        ((App)App.Current).OpenedChildPages.Add(new WeakReference(this));
     }
 }
